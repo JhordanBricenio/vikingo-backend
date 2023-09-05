@@ -5,12 +5,15 @@ import com.codej.licoreria.model.Producto;
 import com.codej.licoreria.model.Venta;
 import com.codej.licoreria.service.IProductoService;
 import com.codej.licoreria.service.IVentaService;
+import jakarta.persistence.criteria.CriteriaBuilder;
 import lombok.AllArgsConstructor;
 import org.springframework.http.HttpStatus;
+import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.*;
 
 import java.util.Date;
 import java.util.List;
+import java.util.Optional;
 
 @RestController
 @RequestMapping("/api/ventas")
@@ -42,10 +45,16 @@ public class VentaRestController {
 
             if (productoActual != null) {
                 int nuevoStock = productoActual.getStock() - cantidadVendida;
-                if (nuevoStock >= 0) {
+                if (nuevoStock > 0) {
                     productoActual.setStock(nuevoStock);
                     int ventasActuales = productoActual.getNVentas();
                     productoActual.setNVentas(ventasActuales + cantidadVendida);
+                    productService.save(productoActual);
+                } else if (nuevoStock == 0) {
+                    productoActual.setStock(nuevoStock);
+                    int ventasActuales = productoActual.getNVentas();
+                    productoActual.setNVentas(ventasActuales + cantidadVendida);
+                    productoActual.setEstado("INACTIVO");
                     productService.save(productoActual);
                 }
             }
@@ -74,5 +83,20 @@ public class VentaRestController {
             return ventaService.findAll();
         }
         return ventaService.findAllVentasPorFechas(fecha1, fecha2);
+    }
+
+    //Cambiar el estado de la venta
+    @PutMapping("/{id}/cambiarEstado")
+    public Venta cambiarEstado(@PathVariable Integer id, @RequestParam String nuevoEstado) {
+        Optional<Venta> optionalVenta = ventaService.findVentaById(id);
+        if (optionalVenta.isPresent()) {
+            Venta venta = optionalVenta.get();
+            venta.setEstado(nuevoEstado);
+            ventaService.save(venta);
+            return venta;
+        }
+        return null;
+
+
     }
 }

@@ -48,4 +48,8 @@ public class Venta {
     public Venta() {
         this.dventas = new ArrayList<>();
     }
+
+    public Venta get() {
+        return this;
+    }
 }

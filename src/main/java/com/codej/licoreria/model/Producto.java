@@ -1,9 +1,7 @@
 package com.codej.licoreria.model;
 
-import com.fasterxml.jackson.annotation.JsonIgnore;
 import com.fasterxml.jackson.annotation.JsonIgnoreProperties;
 import jakarta.persistence.*;
-import jakarta.persistence.criteria.CriteriaBuilder;
 import jakarta.validation.constraints.NotNull;
 import jakarta.validation.constraints.Size;
 import lombok.Data;
@@ -28,18 +26,15 @@ public class Producto {
     @NotNull
     private Integer cantidad;
 
-    private Double cantidadCaja;
-
     @NotNull
     private Double precio;
-    @NotNull
 
     @NotNull
     private Double precioVenta;
 
     private Integer stock;
+
     private Integer nVentas=0;
-    private Double descuento;
     @Column(name = "create_at")
     @Temporal(TemporalType.DATE)
     private Date createdAt;
@@ -69,14 +64,15 @@ public class Producto {
 
     }
     //Generar sku
-    public String generarSku(){
+    public String generarSku() {
         String sku = "";
         String[] palabras = this.nombre.split(" ");
-        for (int i = 0; i < palabras.length; i++) {
-            if (i < 3){
-                sku += palabras[i].substring(0, 3)+"-"+this.createdAt.getTime();
+        for (int i = 0; i < 3; i++) {
+            if (i < palabras.length) {
+                sku += palabras[i].substring(0, 3) + "-";
             }
         }
+        sku += this.createdAt.getTime();
         return sku.toUpperCase();
     }
 

@@ -33,6 +33,16 @@ public class DVenta {
         this.fecha = new Date();
     }
 
+    //sumar precio de envio que tiene la venta
+
+
+
+
+
+    public Double getImporte() {
+        return cantidad * producto.getPrecioVenta();
+    }
+
 
 
     //Calculo de subtotal

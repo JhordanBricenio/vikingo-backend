@@ -18,4 +18,5 @@ public interface IVentaRepository extends JpaRepository<Venta, Integer> {
     List<Venta> findAllVentasPorFechas(@RequestParam("fecha1") Date fecha1 , @RequestParam ("fecha1")Date fecha2);
 
 
+
 }

@@ -4,6 +4,7 @@ import com.codej.licoreria.model.Venta;
 
 import java.util.Date;
 import java.util.List;
+import java.util.Optional;
 
 public interface IVentaService {
     public List<Venta> findAll();
@@ -16,4 +17,6 @@ public interface IVentaService {
 
     //Filtrar ventas por fechas
     List<Venta> findAllVentasPorFechas(Date fecha1, Date fecha2);
+
+    Optional<Venta> findVentaById(Integer id);
 }

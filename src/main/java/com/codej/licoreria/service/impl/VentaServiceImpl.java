@@ -8,6 +8,7 @@ import org.springframework.stereotype.Service;
 
 import java.util.Date;
 import java.util.List;
+import java.util.Optional;
 
 @Service
 @AllArgsConstructor
@@ -43,5 +44,10 @@ public class VentaServiceImpl implements IVentaService {
     @Override
     public List<Venta> findAllVentasPorFechas(Date fecha1, Date fecha2) {
         return ventaRepository.findAllVentasPorFechas(fecha1, fecha2);
+    }
+
+    @Override
+    public Optional<Venta> findVentaById(Integer id) {
+        return ventaRepository.findById(id);
     }
 }
