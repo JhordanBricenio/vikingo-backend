@@ -18,5 +18,8 @@ public interface IVentaRepository extends JpaRepository<Venta, Integer> {
     List<Venta> findAllVentasPorFechas(@RequestParam("fecha1") Date fecha1 , @RequestParam ("fecha1")Date fecha2);
 
 
+    @Query(value = "select v.estado, count(v.estado) from venta v group by v.estado", nativeQuery = true)
+    List<Object[]> contarVentasPorEstado();
+
 
 }

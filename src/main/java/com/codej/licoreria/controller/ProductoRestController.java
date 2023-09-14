@@ -46,12 +46,13 @@ public class ProductoRestController {
     @PutMapping("/{id}")
     Producto update(@RequestBody Producto producto, @PathVariable Integer id){
         Producto productoActual = productoService.findById(id);
+
         if (!producto.getCantidad().equals(productoActual.getCantidad())) {
-            producto.setStock(producto.getCantidad());
+            producto.setStock(productoActual.getStock()+producto.getCantidad());
+            producto.setEstado("ACTIVO");
         } else {
             producto.setNVentas(0);
         }
-
         productoActual.setNombre(producto.getNombre());
         productoActual.setDescripcion(producto.getDescripcion());
         productoActual.setPrecio(producto.getPrecio());

@@ -19,4 +19,7 @@ public interface IVentaService {
     List<Venta> findAllVentasPorFechas(Date fecha1, Date fecha2);
 
     Optional<Venta> findVentaById(Integer id);
+
+    //Contar las ventas por estado
+    List<Object[]> contarVentasPorEstado();
 }

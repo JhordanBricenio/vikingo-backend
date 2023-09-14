@@ -50,4 +50,9 @@ public class VentaServiceImpl implements IVentaService {
     public Optional<Venta> findVentaById(Integer id) {
         return ventaRepository.findById(id);
     }
+
+    @Override
+    public List<Object[]> contarVentasPorEstado() {
+        return ventaRepository.contarVentasPorEstado();
+    }
 }

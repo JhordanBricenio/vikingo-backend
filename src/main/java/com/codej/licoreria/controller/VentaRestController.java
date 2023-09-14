@@ -5,12 +5,11 @@ import com.codej.licoreria.model.Producto;
 import com.codej.licoreria.model.Venta;
 import com.codej.licoreria.service.IProductoService;
 import com.codej.licoreria.service.IVentaService;
-import jakarta.persistence.criteria.CriteriaBuilder;
 import lombok.AllArgsConstructor;
 import org.springframework.http.HttpStatus;
-import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.*;
 
+import java.util.Comparator;
 import java.util.Date;
 import java.util.List;
 import java.util.Optional;
@@ -27,14 +26,15 @@ public class VentaRestController {
 
     @GetMapping
     List<Venta> finAll() {
-        return ventaService.findAll();
+        List<Venta> ventas = ventaService.findAll();
+        ventas.sort(Comparator.comparing(Venta::getFecha).reversed());
+        return ventas;
     }
 
     @PostMapping
     Venta save(@RequestBody Venta venta) {
         venta.setNventa("N" + new Date().getTime());
         Venta ventaNew = null;
-        Producto productActual = null;
         ventaNew = ventaService.save(venta);
         //Disminuir el stock
         for (DVenta detalleVenta : venta.getDventas()) {
@@ -55,6 +55,7 @@ public class VentaRestController {
                     int ventasActuales = productoActual.getNVentas();
                     productoActual.setNVentas(ventasActuales + cantidadVendida);
                     productoActual.setEstado("INACTIVO");
+                    productoActual.setCantidad(0);
                     productService.save(productoActual);
                 }
             }
@@ -79,8 +80,11 @@ public class VentaRestController {
     @ResponseStatus(HttpStatus.OK)
     public List<Venta> showFechas2(@RequestParam(required = false) Date fecha1,
                                    @RequestParam(required = false) Date fecha2) {
+        List<Venta> ventas = ventaService.findAll();
+        ventas.sort(Comparator.comparing(Venta::getFecha).reversed());
+
         if (fecha1 == null || fecha2 == null) {
-            return ventaService.findAll();
+            return ventas;
         }
         return ventaService.findAllVentasPorFechas(fecha1, fecha2);
     }
@@ -96,7 +100,16 @@ public class VentaRestController {
             return venta;
         }
         return null;
-
-
     }
+
+    //Contar las ventas por estado
+    @GetMapping("/contarVentasPorEstado")
+    public List<Object[]> contarVentasPorEstado() {
+        return ventaService.contarVentasPorEstado();
+    }
+
+    //Obtener las primeras 5 ventas
+
+
+
 }

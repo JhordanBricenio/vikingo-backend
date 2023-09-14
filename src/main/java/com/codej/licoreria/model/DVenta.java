@@ -33,11 +33,10 @@ public class DVenta {
         this.fecha = new Date();
     }
 
-    //sumar precio de envio que tiene la venta
-
-
-
-
+    //Calcular la ganancia
+    public Double getGanancia() {
+        return (cantidad* producto.getPrecioVenta()-cantidad * producto.getPrecio());
+    }
 
     public Double getImporte() {
         return cantidad * producto.getPrecioVenta();
