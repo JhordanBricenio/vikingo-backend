@@ -12,6 +12,7 @@ import org.springframework.data.domain.Pageable;
 import org.springframework.http.HttpHeaders;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
+import org.springframework.security.access.annotation.Secured;
 import org.springframework.web.bind.annotation.*;
 import org.springframework.web.multipart.MultipartFile;
 
@@ -26,7 +27,6 @@ import java.util.Map;
 @RestController
 @RequestMapping("/api/producto")
 @AllArgsConstructor
-@CrossOrigin(origins = "*")
 public class ProductoRestController {
     private final IProductoService productoService;
 
@@ -44,6 +44,7 @@ public class ProductoRestController {
     }
 
     @PutMapping("/{id}")
+    @Secured({"ROLE_ADMIN"})
     Producto update(@RequestBody Producto producto, @PathVariable Integer id){
         Producto productoActual = productoService.findById(id);
 
@@ -115,7 +116,7 @@ public class ProductoRestController {
 
     @GetMapping("upload/img/{nombreFoto:.+}")
     public ResponseEntity<Resource> verFoto(@PathVariable String nombreFoto) {
-        Path rutaArchivo = Paths.get("uploads").resolve(nombreFoto).toAbsolutePath();
+        Path rutaArchivo = Paths.get("C:/vikingo/imagenes").resolve(nombreFoto).toAbsolutePath();
         Resource recurso= null;
         try{
             recurso= new UrlResource(rutaArchivo.toUri());

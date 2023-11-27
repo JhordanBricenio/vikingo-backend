@@ -7,6 +7,7 @@ import com.codej.licoreria.service.IProductoService;
 import com.codej.licoreria.service.IVentaService;
 import lombok.AllArgsConstructor;
 import org.springframework.http.HttpStatus;
+import org.springframework.security.access.annotation.Secured;
 import org.springframework.web.bind.annotation.*;
 
 import java.util.Comparator;
@@ -17,7 +18,6 @@ import java.util.Optional;
 @RestController
 @RequestMapping("/api/ventas")
 @AllArgsConstructor
-@CrossOrigin(origins = "*")
 public class VentaRestController {
 
     private final IVentaService ventaService;
@@ -90,6 +90,7 @@ public class VentaRestController {
     }
 
     //Cambiar el estado de la venta
+    @Secured({"ROLE_ADMIN", "ROLE_VENDEDOR"})
     @PutMapping("/{id}/cambiarEstado")
     public Venta cambiarEstado(@PathVariable Integer id, @RequestParam String nuevoEstado) {
         Optional<Venta> optionalVenta = ventaService.findVentaById(id);

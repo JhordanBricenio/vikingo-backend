@@ -25,15 +25,11 @@ public class Producto {
     private String imagen;
     @NotNull
     private Integer cantidad;
-
     @NotNull
     private Double precio;
-
     @NotNull
     private Double precioVenta;
-
     private Integer stock;
-
     private Integer nVentas=0;
     @Column(name = "create_at")
     @Temporal(TemporalType.DATE)
