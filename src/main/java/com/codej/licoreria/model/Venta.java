@@ -39,7 +39,7 @@ public class Venta {
 
     //Relacion con dventa
     //@JsonIgnoreProperties({"hibernateLazyInitializer", "handler"})
-    @OneToMany(fetch = FetchType.LAZY, cascade = CascadeType.ALL)
+    @OneToMany(fetch = FetchType.EAGER, cascade = CascadeType.ALL)
     @JoinColumn(name = "venta_id")
     private List<DVenta> dventas;
 

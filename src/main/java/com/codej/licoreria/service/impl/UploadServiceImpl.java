@@ -16,15 +16,16 @@ import java.util.UUID;
 
 @Service
 public class UploadServiceImpl implements IUploadService {
-    private final static String DIRECTORIO_UPLOAD="uploads";
-    private final static String DIRECTORIO_EXTERNO = "C:/vikingo/imagenes";
+    private final static String DIRECTORIO_UPLOAD="C:/vikingo/imagenes";
+    private final static String DIRECTORIO_EXTERNO = "/opt/uploads/";
+
     @Override
     public Resource cargar(String foto) throws MalformedURLException {
         Path rutaArchivo= getPath(foto);
         Resource recurso= new UrlResource(rutaArchivo.toUri());
 
         if(!recurso.exists() && !recurso.isReadable()){
-            rutaArchivo= Paths.get("C:/vikingo/imagenes").resolve("nofoto.jpg").toAbsolutePath();
+            rutaArchivo= Paths.get("C:/vikingo/imagenes/").resolve("nofoto.jpg").toAbsolutePath();
             recurso= new UrlResource(rutaArchivo.toUri());
         }
         return  recurso;
@@ -42,7 +43,7 @@ public class UploadServiceImpl implements IUploadService {
     @Override
     public boolean eliminar(String nombreFoto) {
         if(nombreFoto!=null && nombreFoto.length()>0){
-            Path rutaFotoAnterior=Paths.get("C:/vikingo/imagenes").resolve(nombreFoto).toAbsolutePath();
+            Path rutaFotoAnterior=Paths.get("C:/vikingo/imagenes/").resolve(nombreFoto).toAbsolutePath();
             File archivoFotoAnterior= rutaFotoAnterior.toFile();
             if(archivoFotoAnterior.exists() &&archivoFotoAnterior.canRead()){
                 archivoFotoAnterior.delete();
@@ -55,6 +56,6 @@ public class UploadServiceImpl implements IUploadService {
 
     @Override
     public Path getPath(String nombreFoto) {
-        return Paths.get(DIRECTORIO_EXTERNO).resolve(nombreFoto).toAbsolutePath();
+        return Paths.get(DIRECTORIO_UPLOAD).resolve(nombreFoto).toAbsolutePath();
     }
 }

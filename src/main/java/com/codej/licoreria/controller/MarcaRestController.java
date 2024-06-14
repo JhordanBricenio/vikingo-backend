@@ -11,7 +11,6 @@ import java.util.List;
 @RestController
 @AllArgsConstructor
 @RequestMapping("/api/marcas")
-@CrossOrigin("*")
 public class MarcaRestController {
 
     private final IMarcaService marcaService;

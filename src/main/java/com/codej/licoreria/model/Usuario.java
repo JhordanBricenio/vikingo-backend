@@ -20,7 +20,7 @@ public class Usuario {
     @Column(nullable = false, unique = true)
     @NotBlank(message = "El nombre de usuario no puede estar vacio")
     private String nombres;
-    @Column(nullable = false, unique = true)
+    @Column(nullable = false)
     @NotBlank(message = "El apellido no puede estar vacio")
     private String apellidos;
 
@@ -36,6 +36,16 @@ public class Usuario {
 
     @Column(length = 200)
     private String foto;
+
+
+    @Column(name = "account_no_expired")
+    private boolean accountNoExpired=true;
+
+    @Column(name = "account_no_locked")
+    private boolean accountNoLocked=true;
+
+    @Column(name = "credentials_no_expired")
+    private boolean credentialsNoExpired=true;
 
     // Relacion con la tabla Rol
     @JsonIgnoreProperties({"usuario","hibernateLazyInitializer", "handler"})

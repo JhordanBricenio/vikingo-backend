@@ -39,14 +39,14 @@ public class Producto {
 
 
     @NotNull(message = "La categoria no puede ser vacia")
-    @ManyToOne(fetch = FetchType.LAZY)
+    @ManyToOne(fetch = FetchType.EAGER)
     @JoinColumn(name = "categorias_id")
     @JsonIgnoreProperties({"hibernateLazyInitializer", "handler"})
     private Categoria categoria;
 
 
     @NotNull(message = "La marca no puede ser vacia")
-    @ManyToOne(fetch = FetchType.LAZY)
+    @ManyToOne(fetch = FetchType.EAGER)
     @JoinColumn(name = "marca_id")
     @JsonIgnoreProperties({"hibernateLazyInitializer", "handler"})
     private Marca marca;

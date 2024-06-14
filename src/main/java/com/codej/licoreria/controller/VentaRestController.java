@@ -49,7 +49,10 @@ public class VentaRestController {
                     productoActual.setStock(nuevoStock);
                     int ventasActuales = productoActual.getNVentas();
                     productoActual.setNVentas(ventasActuales + cantidadVendida);
+                    productoActual.setCantidad(nuevoStock);
+                    productoActual.setEstado("ACTIVO");
                     productService.save(productoActual);
+
                 } else if (nuevoStock == 0) {
                     productoActual.setStock(nuevoStock);
                     int ventasActuales = productoActual.getNVentas();
